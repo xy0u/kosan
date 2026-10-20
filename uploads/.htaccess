@@ -1,0 +1,5 @@
+# Cegah file script dijalankan dari folder upload
+<FilesMatch "\.(php|phtml|phar|php\d)$">
+    Require all denied
+</FilesMatch>
+Options -Indexes

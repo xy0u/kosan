@@ -1,0 +1,97 @@
+/* =====================================================================
+   Animasi & efek — halus, singkat, dan hormati prefers-reduced-motion
+   ===================================================================== */
+:root {
+    --ease-out: cubic-bezier(.22, .61, .36, 1);
+    --dur: .45s;
+}
+
+/* Halaman muncul pelan saat dibuka */
+.page-enter { animation: pageIn .4s var(--ease-out) both; }
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Kartu di dashboard muncul berurutan */
+.app-content .row > [class*="col"] > .card { animation: pageIn .45s var(--ease-out) both; }
+.app-content .row > [class*="col"]:nth-child(2) > .card { animation-delay: .04s; }
+.app-content .row > [class*="col"]:nth-child(3) > .card { animation-delay: .08s; }
+.app-content .row > [class*="col"]:nth-child(4) > .card { animation-delay: .12s; }
+.app-content .row > [class*="col"]:nth-child(5) > .card { animation-delay: .16s; }
+.app-content .row > [class*="col"]:nth-child(6) > .card { animation-delay: .2s; }
+
+/* Elemen muncul saat di-scroll (hanya aktif kalau JS jalan) */
+.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+    will-change: opacity, transform;
+}
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* Navbar publik: bayangan tipis setelah scroll */
+.site-nav { transition: box-shadow .25s ease, background-color .25s ease; }
+.site-nav.scrolled { box-shadow: 0 6px 24px -12px rgba(15, 23, 42, .18); background: rgba(255, 255, 255, .92); backdrop-filter: saturate(160%) blur(10px); }
+
+/* Interaksi umum */
+.btn { transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease, transform .1s ease; }
+.btn:active { transform: scale(.98); }
+.btn-primary:hover { box-shadow: 0 6px 16px -8px rgba(15, 118, 110, .6); }
+.card { transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+a.stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(15, 23, 42, .25) !important; }
+.table tbody tr { transition: background-color .12s ease; }
+.table tbody tr:hover { background-color: #f8fafc; }
+.form-control, .form-select { transition: border-color .15s ease, box-shadow .15s ease; }
+
+/* Kartu kamar: zoom foto halus */
+.room-card .thumb { overflow: hidden; }
+.room-card .thumb img { transition: transform .6s var(--ease-out); }
+.room-card:hover .thumb img { transform: scale(1.04); }
+.room-card .bi-arrow-right { display: inline-block; transition: transform .2s ease; }
+.room-card:hover .bi-arrow-right { transform: translateX(3px); }
+
+/* Galeri: ganti foto dengan crossfade */
+.gallery-main { transition: opacity .25s ease; }
+.gallery-main.swap { opacity: 0; }
+.gallery-thumb { transition: opacity .15s ease, border-color .15s ease; }
+
+/* Sidebar */
+.sidebar .nav-link { position: relative; transition: background-color .15s ease, color .15s ease; }
+.sidebar .nav-link.active::before {
+    content: ""; position: absolute; left: -.7rem; top: 22%; bottom: 22%;
+    width: 3px; border-radius: 0 3px 3px 0; background: #5eead4;
+}
+.nav-count { animation: pop .35s var(--ease-out) both .2s; }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Dropdown & alert */
+.dropdown-menu.show { animation: dropIn .16s var(--ease-out); }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.alert { animation: slideDown .3s var(--ease-out); }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Tombol saat form dikirim */
+.btn.is-loading { pointer-events: none; color: transparent !important; position: relative; }
+.btn.is-loading::after {
+    content: ""; position: absolute; inset: 0; margin: auto;
+    width: 1rem; height: 1rem; border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, .5); border-top-color: #fff;
+    animation: spin .6s linear infinite;
+}
+.btn-light.is-loading::after, .btn-outline-primary.is-loading::after, .btn-outline-danger.is-loading::after,
+.btn-outline-success.is-loading::after, .btn-link.is-loading::after {
+    border-color: rgba(15, 118, 110, .25); border-top-color: var(--brand);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Progress & grafik tumbuh saat tampil */
+.progress-bar { transition: width .9s var(--ease-out); }
+.js .grow-bar { transform-origin: bottom; transform: scaleY(0); transition: transform .8s var(--ease-out); }
+.js .is-visible .grow-bar, .js .grow-bar.is-visible { transform: scaleY(1); }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    .js [data-reveal] { opacity: 1; transform: none; }
+    .js .grow-bar { transform: none; }
+}

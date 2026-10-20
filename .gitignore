@@ -1,0 +1,21 @@
+# Ruflo local secrets and runtime data
+.env
+.env.local
+.env.*.local
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+
+# Tooling pribadi (tidak perlu ikut ke repo)
+.agents/
+.claude/
+.claude-flow/
+.swarm/
+.mcp.json
+CLAUDE.md
+.vscode/
+.idea/
+
+# File yang diupload user (foto kamar, bukti transfer, dll)
+uploads/*
+!uploads/.htaccess
