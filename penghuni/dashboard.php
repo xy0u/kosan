@@ -44,17 +44,14 @@ $pengumuman = q('SELECT * FROM pengumuman ORDER BY id DESC LIMIT 5')->fetchAll()
 $title = 'Dashboard';
 require __DIR__ . '/../includes/header.php';
 ?>
-<div class="mb-4">
-    <h1 class="h3 mb-1">Selamat datang, <?= e(strtok($u['nama'], ' ')) ?></h1>
-    <p class="text-muted mb-0"><?= tgl(date('Y-m-d')) ?> &middot; Ringkasan sewa dan tagihan kamu.</p>
-</div>
+<?= welcome_banner('Selamat datang, ' . $u['nama'], $sewa ? 'Kamar ' . $sewa['nomor_kamar'] . ' · sewa sampai ' . tgl($sewa['tanggal_selesai']) : 'Ringkasan sewa dan tagihan kamu.') ?>
 <div class="row g-4">
     <div class="col-lg-8">
         <div class="card shadow-sm mb-4"><div class="card-body">
             <h5>Kamar saya</h5>
             <?php if ($sewa): ?>
                 <div class="row text-center mt-3">
-                    <div class="col-4"><div class="text-muted small">Kamar</div><div class="fs-4 fw-bold"><?= e($sewa['nomor_kamar']) ?></div><div class="small"><?= e($sewa['tipe']) ?></div></div>
+                    <div class="col-4"><div class="text-muted small">Kamar</div><div class="fs-4 fw-bold"><?= e($sewa['nomor_kamar']) ?></div><div class="small text-muted"><?= e($sewa['ukuran']) ?> m</div></div>
                     <div class="col-4"><div class="text-muted small">Mulai</div><div class="fw-bold"><?= tgl($sewa['tanggal_mulai']) ?></div></div>
                     <div class="col-4"><div class="text-muted small">Berakhir</div><div class="fw-bold"><?= tgl($sewa['tanggal_selesai']) ?></div></div>
                 </div>

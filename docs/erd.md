@@ -39,8 +39,8 @@ erDiagram
     kamar {
         int id PK
         varchar nomor_kamar UK
-        varchar tipe
-        int harga_per_bulan
+        int harga_per_bulan "default 1.000.000"
+        varchar ukuran
         enum status "kosong|terisi|perbaikan"
     }
     booking {

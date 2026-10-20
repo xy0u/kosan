@@ -116,6 +116,14 @@ function inisial(string $nama): string
     return strtoupper(substr($kata[0], 0, 1) . (isset($kata[1]) ? substr($kata[1], 0, 1) : ''));
 }
 
+/** Banner sambutan berwarna di atas halaman dashboard. */
+function welcome_banner(string $judul, string $sub): string
+{
+    return '<div class="welcome"><div class="hero-bg" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="hero-grid"></span></div>'
+        . '<div class="small text-uppercase fw-bold opacity-75 mb-1" style="letter-spacing:.1em">' . e(tgl(date('Y-m-d'))) . '</div>'
+        . '<h1 class="h3">' . e($judul) . '</h1><p class="mb-0 opacity-75">' . e($sub) . '</p></div>';
+}
+
 function logo_svg(): string
 {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
@@ -353,7 +361,7 @@ function hapus_upload(?string $path): void
 function sewa_aktif(int $userId): ?array
 {
     return q(
-        "SELECT s.*, k.nomor_kamar, k.tipe FROM sewa s JOIN kamar k ON k.id = s.kamar_id
+        "SELECT s.*, k.nomor_kamar, k.ukuran FROM sewa s JOIN kamar k ON k.id = s.kamar_id
          WHERE s.user_id = ? AND s.status = 'aktif'",
         [$userId]
     )->fetch() ?: null;

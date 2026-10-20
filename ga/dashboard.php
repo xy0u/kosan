@@ -26,7 +26,7 @@ $habis = q(
 $title = 'Dashboard GA';
 require __DIR__ . '/../includes/header.php';
 ?>
-<h1 class="h3 mb-4">Dashboard General Affair</h1>
+<?= welcome_banner('Selamat bekerja, ' . $u['nama'], 'Ringkasan pekerjaan yang perlu ditindaklanjuti hari ini.') ?>
 <?php if ($belumGenerate): ?>
     <div class="alert alert-warning d-flex justify-content-between align-items-center">
         <span><?= $belumGenerate ?> sewa aktif belum punya tagihan <?= periode_label($periodeIni) ?>.</span>
@@ -38,7 +38,8 @@ require __DIR__ . '/../includes/header.php';
         <div class="col-6 col-md-4 col-xl-2">
             <a href="<?= url($link) ?>" class="card shadow-sm stat-card h-100 text-decoration-none"><div class="card-body">
                 <i class="bi <?= $icon ?> text-<?= $warna ?>"></i>
-                <div class="fs-2 fw-bold text-body"><?= (int) q($sql)->fetchColumn() ?></div>
+                <?php $n = (int) q($sql)->fetchColumn(); ?>
+                <div class="fs-2 fw-bold text-body" data-count="<?= $n ?>"><?= $n ?></div>
                 <div class="small text-muted"><?= $label ?></div>
             </div></a>
         </div>

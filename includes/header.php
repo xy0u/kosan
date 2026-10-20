@@ -17,7 +17,7 @@ $layout = $layout ?? ($u ? 'app' : 'site');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e(($title ?? 'Beranda') . ' — ' . APP_NAME) ?></title>
-    <meta name="description" content="<?= e(APP_NAME . ' — kos bulanan di ' . KOTA . '. Lihat kamar tersedia, booking, dan bayar tagihan secara online.') ?>">
+    <meta name="description" content="<?= e(APP_NAME . ' — kos bulanan di Jl. Kopo, Gg. Pakasih, ' . KOTA . '. Semua kamar ' . rupiah(HARGA_SEWA) . ' per bulan. Booking dan bayar tagihan secara online.') ?>">
     <link rel="icon" href="<?= url('assets/img/favicon.svg') ?>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,14 +26,16 @@ $layout = $layout ?? ($u ? 'app' : 'site');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="<?= asset('assets/css/style.css') ?>" rel="stylesheet">
     <link href="<?= asset('assets/css/motion.css') ?>" rel="stylesheet">
+    <link href="<?= asset('assets/css/theme.css') ?>" rel="stylesheet">
 </head>
 <?php if ($layout === 'auth'): ?>
 <body>
 <div class="auth">
     <aside class="auth-aside">
+        <div class="hero-bg" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="hero-grid"></span></div>
         <a href="<?= url() ?>" class="logo"><span class="logo-mark"><?= logo_svg() ?></span><?= e(APP_NAME) ?></a>
         <div>
-            <h2 class="mb-3">Kelola sewa kos tanpa ribet, dari mana saja.</h2>
+            <h2 class="mb-3">Tempat pulang yang tenang di Kopo, <?= e(KOTA) ?>.</h2>
             <p class="mb-0 opacity-75">Cek tagihan, kirim bukti bayar, dan laporkan kendala kamar langsung dari ponsel.</p>
         </div>
         <div class="small opacity-50">&copy; <?= date('Y') ?> <?= e(APP_NAME) ?> &middot; <?= e(KOTA) ?></div>
@@ -45,6 +47,7 @@ $layout = $layout ?? ($u ? 'app' : 'site');
 
 <?php elseif ($layout === 'site'): ?>
 <body class="site-body">
+<div class="scroll-progress" id="scrollProgress"></div>
 <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
     <div class="container">
         <a class="logo" href="<?= url() ?>"><span class="logo-mark"><?= logo_svg() ?></span><?= e(APP_NAME) ?></a>

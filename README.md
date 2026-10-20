@@ -1,6 +1,8 @@
-# KosKu – Sistem Informasi Kosan
+# Kos Tumaninah – Sistem Informasi Kosan
 
 Website pengelolaan kosan berbasis **PHP native + MySQL + Bootstrap 5**, jalan di XAMPP.
+
+Kos bulanan di Jl. Kopo, Gg. Pakasih, Bandung. Semua kamar Rp 1.000.000/bulan (tanpa tipe kamar). Kunjungan wajib janjian via WhatsApp.
 
 ## Cara menjalankan
 1. Clone repo ini ke folder `htdocs` XAMPP dengan nama folder `kosan`:
@@ -31,7 +33,7 @@ kosan/
 ├── includes/               ← helper (functions.php), header, footer
 ├── database/kosan.sql      ← struktur 16 tabel + data contoh
 ├── docs/                   ← user requirement & ERD
-├── assets/                 ← CSS (style.css, motion.css), JS (app.js), gambar
+├── assets/                 ← CSS (style.css, motion.css, theme.css), JS (app.js), gambar
 ├── uploads/                ← foto kamar, bukti transfer (otomatis)
 ├── index.php, kamar.php    ← halaman publik
 ├── login.php, register.php, profil.php, logout.php

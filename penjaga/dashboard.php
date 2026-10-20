@@ -14,20 +14,17 @@ $penghuni = q(
 $title = 'Dashboard Penjaga';
 require __DIR__ . '/../includes/header.php';
 ?>
-<div class="mb-4">
-    <h1 class="h3 mb-1">Ringkasan hari ini</h1>
-    <p class="text-muted mb-0"><?= tgl(date('Y-m-d')) ?> &middot; Bertugas: <?= e($u['nama']) ?></p>
-</div>
+<?= welcome_banner('Selamat bertugas, ' . $u['nama'], count($tugasAktif) . ' tugas aktif · ' . $tamuDiDalam . ' tamu sedang di dalam') ?>
 <div class="row g-3 mb-4">
     <div class="col-6 col-md-4">
         <a href="<?= url('penjaga/tugas.php') ?>" class="card shadow-sm stat-card text-decoration-none"><div class="card-body d-flex justify-content-between">
-            <div><div class="text-muted small">Tugas aktif</div><div class="fs-2 fw-bold"><?= count($tugasAktif) ?></div></div>
+            <div><div class="text-muted small">Tugas aktif</div><div class="fs-2 fw-bold" data-count="<?= count($tugasAktif) ?>"><?= count($tugasAktif) ?></div></div>
             <i class="bi bi-tools text-primary"></i>
         </div></a>
     </div>
     <div class="col-6 col-md-4">
         <a href="<?= url('penjaga/tamu.php') ?>" class="card shadow-sm stat-card text-decoration-none"><div class="card-body d-flex justify-content-between">
-            <div><div class="text-muted small">Tamu di dalam</div><div class="fs-2 fw-bold"><?= $tamuDiDalam ?></div></div>
+            <div><div class="text-muted small">Tamu di dalam</div><div class="fs-2 fw-bold" data-count="<?= $tamuDiDalam ?>"><?= $tamuDiDalam ?></div></div>
             <i class="bi bi-person-badge text-success"></i>
         </div></a>
     </div>

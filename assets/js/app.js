@@ -3,8 +3,8 @@
     document.documentElement.classList.add('js');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1. Elemen [data-reveal] muncul saat masuk layar
-    const revealEls = document.querySelectorAll('[data-reveal]');
+    // 1. Elemen [data-reveal] muncul saat masuk layar; [data-observe] hanya diberi kelas is-visible
+    const revealEls = document.querySelectorAll('[data-reveal], [data-observe]');
     if ('IntersectionObserver' in window && !reduceMotion) {
         const io = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -35,12 +35,32 @@
         requestAnimationFrame(tick);
     });
 
-    // 3. Navbar publik diberi bayangan setelah scroll
+    // 3. Navbar publik diberi bayangan setelah scroll + garis progres baca di atas
     const nav = document.getElementById('siteNav');
-    if (nav) {
-        const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    const progress = document.getElementById('scrollProgress');
+    if (nav || progress) {
+        const onScroll = () => {
+            if (nav) nav.classList.toggle('scrolled', window.scrollY > 8);
+            if (progress) {
+                const max = document.documentElement.scrollHeight - window.innerHeight;
+                progress.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
+            }
+        };
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // 3b. Kartu kamar sedikit miring mengikuti kursor (hanya perangkat dengan mouse)
+    if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('[data-tilt]').forEach((card) => {
+            card.addEventListener('mousemove', (e) => {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                card.style.transform = `perspective(900px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+        });
     }
 
     // 4. Galeri foto kamar

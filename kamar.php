@@ -8,7 +8,7 @@ if (!$k) {
 }
 $foto = q('SELECT path FROM foto_kamar WHERE kamar_id = ? ORDER BY id', [$k['id']])->fetchAll(PDO::FETCH_COLUMN);
 $fasilitas = fasilitas_map()[$k['id']] ?? [];
-$waText = rawurlencode("Halo, saya tertarik dengan Kamar {$k['nomor_kamar']} ({$k['tipe']}). Apakah masih tersedia?");
+$waText = rawurlencode("Halo " . APP_NAME . ", saya tertarik dengan Kamar {$k['nomor_kamar']}. Apakah masih tersedia, dan kapan saya bisa melihat kamarnya?");
 $lainnya = q(
     "SELECT k.*, (SELECT path FROM foto_kamar f WHERE f.kamar_id = k.id ORDER BY f.id LIMIT 1) AS foto
      FROM kamar k WHERE k.status = 'kosong' AND k.id <> ? ORDER BY ABS(k.harga_per_bulan - ?) LIMIT 3",
@@ -57,6 +57,7 @@ require __DIR__ . '/includes/header.php';
                 <h2 class="h5 fw-bold mb-3">Ketentuan umum</h2>
                 <ul class="text-muted small ps-3 mb-0 d-grid gap-1">
                     <li>Pembayaran sewa paling lambat tanggal <?= JATUH_TEMPO_TANGGAL ?> setiap bulan.</li>
+                    <li>Survei kamar wajib janjian lewat WhatsApp terlebih dahulu.</li>
                     <li>Tamu wajib lapor ke penjaga dan tidak menginap.</li>
                     <li>Deposit dikembalikan saat check-out setelah pemeriksaan kamar.</li>
                 </ul>
@@ -68,7 +69,7 @@ require __DIR__ . '/includes/header.php';
                     <h1 class="h3 fw-bold mb-0">Kamar <?= e($k['nomor_kamar']) ?></h1>
                     <?= badge($k['status']) ?>
                 </div>
-                <p class="text-muted mb-4"><?= e($k['tipe']) ?> &middot; <?= e($k['ukuran']) ?> m</p>
+                <p class="text-muted mb-4">Ukuran <?= e($k['ukuran']) ?> m &middot; <?= count($fasilitas) ?> fasilitas</p>
                 <div class="mb-4">
                     <span class="fs-3 fw-bold"><?= rupiah($k['harga_per_bulan']) ?></span>
                     <span class="text-muted">/ bulan</span>
@@ -83,6 +84,7 @@ require __DIR__ . '/includes/header.php';
                 <ul class="list-unstyled small text-muted mb-0 d-grid gap-2">
                     <li><i class="bi bi-shield-check me-2 text-primary"></i>Booking tidak dipungut biaya</li>
                     <li><i class="bi bi-calendar2-week me-2 text-primary"></i>Sewa minimal 1 bulan</li>
+                    <li><i class="bi bi-whatsapp me-2 text-primary"></i>Survei kamar dengan janji via WhatsApp</li>
                     <li><i class="bi bi-geo-alt me-2 text-primary"></i><?= e(ALAMAT) ?></li>
                 </ul>
             </div></div>
@@ -98,7 +100,7 @@ require __DIR__ . '/includes/header.php';
                         <article class="card room-card h-100 position-relative">
                             <div class="thumb"><img src="<?= foto_url($l['foto']) ?>" alt="" loading="lazy"></div>
                             <div class="card-body d-flex justify-content-between align-items-center">
-                                <div><div class="title">Kamar <?= e($l['nomor_kamar']) ?></div><div class="meta"><?= e($l['tipe']) ?></div></div>
+                                <div><div class="title">Kamar <?= e($l['nomor_kamar']) ?></div><div class="meta"><?= e($l['ukuran']) ?> m</div></div>
                                 <div class="price"><?= rupiah($l['harga_per_bulan']) ?></div>
                             </div>
                             <a href="<?= url('kamar.php?id=' . $l['id']) ?>" class="stretched-link" aria-label="Kamar <?= e($l['nomor_kamar']) ?>"></a>

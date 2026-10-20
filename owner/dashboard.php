@@ -30,7 +30,7 @@ $maks = max(1, ...array_map(fn($g) => max($g['masuk'], $g['keluar']), $grafik));
 $title = 'Dashboard Owner';
 require __DIR__ . '/../includes/header.php';
 ?>
-<h1 class="h3 mb-4">Dashboard Owner</h1>
+<?= welcome_banner('Selamat datang, ' . $u['nama'], "Hunian {$okupansi}% bulan ini · " . count($nunggak) . ' tagihan terlambat') ?>
 <div class="row g-3 mb-4">
     <div class="col-6 col-lg-3"><div class="card shadow-sm stat-card h-100"><div class="card-body">
         <div class="text-muted small">Tingkat hunian</div><div class="fs-2 fw-bold"><?= $okupansi ?>%</div>
@@ -67,7 +67,7 @@ require __DIR__ . '/../includes/header.php';
         </div></div>
         <div class="card shadow-sm"><div class="card-body">
             <h5>Tagihan terlambat <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis ms-1"><?= count($nunggak) ?></span></h5>
-            <table class="table table-sm mb-0">
+            <div class="table-responsive"><table class="table table-sm mb-0 text-nowrap">
                 <?php foreach ($nunggak as $n): ?>
                     <tr>
                         <td><?= e($n['nomor_kamar']) ?></td><td><?= e($n['nama']) ?></td>
@@ -76,7 +76,7 @@ require __DIR__ . '/../includes/header.php';
                     </tr>
                 <?php endforeach; ?>
                 <?php if (!$nunggak): ?><tr><td class="text-muted">Tidak ada tagihan yang terlambat.</td></tr><?php endif; ?>
-            </table>
+            </table></div>
         </div></div>
     </div>
     <div class="col-lg-5">

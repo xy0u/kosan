@@ -57,7 +57,7 @@ require __DIR__ . '/../includes/header.php';
                     <option value="">-- pilih kamar --</option>
                     <?php foreach ($kamarKosong as $k): ?>
                         <option value="<?= $k['id'] ?>" <?= $k['id'] == $pilih ? 'selected' : '' ?>>
-                            <?= e($k['nomor_kamar']) ?> - <?= e($k['tipe']) ?> (<?= rupiah($k['harga_per_bulan']) ?>/bln)
+                            Kamar <?= e($k['nomor_kamar']) ?> (<?= rupiah($k['harga_per_bulan']) ?>/bln)
                         </option>
                     <?php endforeach; ?>
                 </select>

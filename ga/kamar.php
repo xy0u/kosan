@@ -45,12 +45,11 @@ require __DIR__ . '/../includes/header.php';
     <div class="col-lg-9">
         <div class="card shadow-sm"><div class="card-body table-responsive">
             <table class="table">
-                <thead><tr><th>No.</th><th>Tipe</th><th>Harga/bln</th><th>Ukuran</th><th>Foto</th><th>Penghuni</th><th>Status</th><th></th></tr></thead>
+                <thead><tr><th>No.</th><th>Harga/bln</th><th>Ukuran</th><th>Foto</th><th>Penghuni</th><th>Status</th><th></th></tr></thead>
                 <tbody>
                 <?php foreach ($kamar as $k): ?>
                     <tr>
                         <td class="fw-bold"><?= e($k['nomor_kamar']) ?></td>
-                        <td><?= e($k['tipe']) ?></td>
                         <td><?= rupiah($k['harga_per_bulan']) ?></td>
                         <td><?= e($k['ukuran']) ?></td>
                         <td><?= $k['jml_foto'] ?></td>

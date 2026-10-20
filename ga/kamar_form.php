@@ -8,27 +8,26 @@ $k = $id ? q('SELECT * FROM kamar WHERE id = ?', [$id])->fetch() : null;
 if ($id && !$k) {
     redirect('ga/kamar.php');
 }
-$k = $k ?: ['nomor_kamar' => '', 'tipe' => '', 'harga_per_bulan' => '', 'ukuran' => '', 'status' => 'kosong', 'deskripsi' => ''];
+$k = $k ?: ['nomor_kamar' => '', 'harga_per_bulan' => HARGA_SEWA, 'ukuran' => '', 'status' => 'kosong', 'deskripsi' => ''];
 
 if (is_post()) {
     $data = [
         trim($_POST['nomor_kamar'] ?? ''),
-        trim($_POST['tipe'] ?? ''),
         (int) ($_POST['harga_per_bulan'] ?? 0),
         trim($_POST['ukuran'] ?? ''),
         in_array($_POST['status'] ?? '', ['kosong', 'terisi', 'perbaikan'], true) ? $_POST['status'] : 'kosong',
         trim($_POST['deskripsi'] ?? ''),
     ];
-    if ($data[0] === '' || $data[1] === '' || $data[2] <= 0) {
-        flash('danger', 'Nomor kamar, tipe, dan harga wajib diisi.');
+    if ($data[0] === '' || $data[1] <= 0) {
+        flash('danger', 'Nomor kamar dan harga wajib diisi.');
         back();
     }
     try {
         db()->beginTransaction();
         if ($id) {
-            q('UPDATE kamar SET nomor_kamar = ?, tipe = ?, harga_per_bulan = ?, ukuran = ?, status = ?, deskripsi = ? WHERE id = ?', [...$data, $id]);
+            q('UPDATE kamar SET nomor_kamar = ?, harga_per_bulan = ?, ukuran = ?, status = ?, deskripsi = ? WHERE id = ?', [...$data, $id]);
         } else {
-            q('INSERT INTO kamar (nomor_kamar, tipe, harga_per_bulan, ukuran, status, deskripsi) VALUES (?, ?, ?, ?, ?, ?)', $data);
+            q('INSERT INTO kamar (nomor_kamar, harga_per_bulan, ukuran, status, deskripsi) VALUES (?, ?, ?, ?, ?)', $data);
             $id = (int) db()->lastInsertId();
         }
 
@@ -82,10 +81,8 @@ require __DIR__ . '/../includes/header.php';
 <form method="post" enctype="multipart/form-data" class="card shadow-sm"><div class="card-body">
     <?= csrf_field() ?>
     <div class="row">
-        <div class="col-md-3 mb-3"><label class="form-label">Nomor kamar</label><input name="nomor_kamar" class="form-control" value="<?= e($k['nomor_kamar']) ?>" required></div>
-        <div class="col-md-3 mb-3"><label class="form-label">Tipe</label><input name="tipe" class="form-control" list="tipe" value="<?= e($k['tipe']) ?>" required>
-            <datalist id="tipe"><option>Standar</option><option>Eksklusif</option></datalist></div>
-        <div class="col-md-3 mb-3"><label class="form-label">Harga per bulan</label><input type="number" name="harga_per_bulan" class="form-control" value="<?= e($k['harga_per_bulan']) ?>" min="1" required></div>
+        <div class="col-md-4 mb-3"><label class="form-label">Nomor kamar</label><input name="nomor_kamar" class="form-control" value="<?= e($k['nomor_kamar']) ?>" required></div>
+        <div class="col-md-5 mb-3"><label class="form-label">Harga per bulan</label><input type="number" name="harga_per_bulan" class="form-control" value="<?= e($k['harga_per_bulan']) ?>" min="1" required></div>
         <div class="col-md-3 mb-3"><label class="form-label">Ukuran (m)</label><input name="ukuran" class="form-control" placeholder="3x4" value="<?= e($k['ukuran']) ?>"></div>
     </div>
     <div class="row">

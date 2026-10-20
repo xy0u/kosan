@@ -9,7 +9,7 @@
         <div class="row g-4">
             <div class="col-lg-5">
                 <a href="<?= url() ?>" class="logo mb-3"><span class="logo-mark"><?= logo_svg() ?></span><?= e(APP_NAME) ?></a>
-                <p class="mt-3 mb-0" style="max-width:24rem">Kos bulanan di <?= e(KOTA) ?> dengan pengelolaan transparan — booking, tagihan, dan laporan kerusakan tercatat rapi.</p>
+                <p class="mt-3 mb-0" style="max-width:24rem">Kos bulanan di Jl. Kopo, <?= e(KOTA) ?>. Semua kamar <?= rupiah(HARGA_SEWA) ?> per bulan, dengan booking dan tagihan yang tercatat rapi.</p>
             </div>
             <div class="col-6 col-lg-3">
                 <h6 class="mb-3">Kontak</h6>
@@ -21,7 +21,7 @@
             <div class="col-6 col-lg-4">
                 <h6 class="mb-3">Alamat</h6>
                 <p class="mb-1"><?= e(ALAMAT) ?></p>
-                <p class="mb-0 small"><?= e(JAM_KUNJUNGAN) ?></p>
+                <p class="mb-0 small">Kunjungan &amp; survei kamar wajib janjian via WhatsApp terlebih dahulu.</p>
             </div>
         </div>
         <div class="border-top border-secondary border-opacity-25 mt-4 pt-3 small d-flex flex-wrap justify-content-between gap-2">

@@ -36,8 +36,7 @@ CREATE TABLE users (
 CREATE TABLE kamar (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nomor_kamar     VARCHAR(10) NOT NULL UNIQUE,
-    tipe            VARCHAR(50) NOT NULL,
-    harga_per_bulan INT UNSIGNED NOT NULL,
+    harga_per_bulan INT UNSIGNED NOT NULL DEFAULT 1000000,
     ukuran          VARCHAR(20),
     status          ENUM('kosong','terisi','perbaikan') NOT NULL DEFAULT 'kosong',
     deskripsi       TEXT,
@@ -229,13 +228,13 @@ INSERT INTO users (id, nama, email, password, no_hp, role, no_ktp, alamat, konta
 INSERT INTO fasilitas (id, nama) VALUES
 (1, 'AC'), (2, 'Kipas Angin'), (3, 'WiFi'), (4, 'Kamar Mandi Dalam'), (5, 'Kasur'), (6, 'Lemari'), (7, 'Meja Belajar'), (8, 'Water Heater');
 
-INSERT INTO kamar (id, nomor_kamar, tipe, harga_per_bulan, ukuran, status, deskripsi) VALUES
-(1, 'A01', 'Standar',   800000,  '3x3', 'terisi',    'Kamar lantai 1 dekat dapur bersama.'),
-(2, 'A02', 'Standar',   800000,  '3x3', 'kosong',    'Kamar lantai 1, jendela menghadap taman.'),
-(3, 'A03', 'Standar',   850000,  '3x4', 'kosong',    'Kamar lantai 1 sudut, lebih luas.'),
-(4, 'B01', 'Eksklusif', 1500000, '4x4', 'kosong',    'Lantai 2, AC dan kamar mandi dalam dengan water heater.'),
-(5, 'B02', 'Eksklusif', 1500000, '4x4', 'kosong',    'Lantai 2, balkon pribadi.'),
-(6, 'B03', 'Eksklusif', 1450000, '4x4', 'perbaikan', 'Sedang pengecatan ulang.');
+INSERT INTO kamar (id, nomor_kamar, harga_per_bulan, ukuran, status, deskripsi) VALUES
+(1, 'A01', 1000000, '3x3', 'terisi',    'Kamar lantai 1 dekat dapur bersama.'),
+(2, 'A02', 1000000, '3x3', 'kosong',    'Kamar lantai 1, jendela menghadap taman.'),
+(3, 'A03', 1000000, '3x4', 'kosong',    'Kamar lantai 1 sudut, lebih luas.'),
+(4, 'B01', 1000000, '4x4', 'kosong',    'Lantai 2 dengan kamar mandi dalam.'),
+(5, 'B02', 1000000, '4x4', 'kosong',    'Lantai 2, dekat balkon jemur.'),
+(6, 'B03', 1000000, '4x4', 'perbaikan', 'Sedang pengecatan ulang.');
 
 INSERT INTO kamar_fasilitas (kamar_id, fasilitas_id) VALUES
 (1,2),(1,3),(1,5),(1,6),
@@ -247,16 +246,16 @@ INSERT INTO kamar_fasilitas (kamar_id, fasilitas_id) VALUES
 
 -- Budi ngekos di A01 sejak Agustus 2026 selama 6 bulan
 INSERT INTO sewa (id, user_id, kamar_id, tanggal_mulai, tanggal_selesai, harga_bulanan, deposit, status) VALUES
-(1, 4, 1, '2026-08-01', '2027-02-01', 800000, 500000, 'aktif');
+(1, 4, 1, '2026-08-01', '2027-02-01', 1000000, 500000, 'aktif');
 
 INSERT INTO tagihan (id, sewa_id, periode, jumlah, jatuh_tempo, status) VALUES
-(1, 1, '2026-08', 800000, '2026-08-01', 'lunas'),
-(2, 1, '2026-09', 800000, '2026-09-10', 'lunas'),
-(3, 1, '2026-10', 800000, '2026-10-10', 'belum');
+(1, 1, '2026-08', 1000000, '2026-08-01', 'lunas'),
+(2, 1, '2026-09', 1000000, '2026-09-10', 'lunas'),
+(3, 1, '2026-10', 1000000, '2026-10-10', 'belum');
 
 INSERT INTO pembayaran (tagihan_id, tanggal_bayar, jumlah, metode, status, divalidasi_oleh) VALUES
-(1, '2026-08-01 10:00:00', 800000, 'Tunai',         'valid', 2),
-(2, '2026-09-08 19:30:00', 800000, 'Transfer Bank', 'valid', 2);
+(1, '2026-08-01 10:00:00', 1000000, 'Tunai',         'valid', 2),
+(2, '2026-09-08 19:30:00', 1000000, 'Transfer Bank', 'valid', 2);
 
 -- Siti booking kamar A03, menunggu persetujuan GA
 INSERT INTO booking (user_id, kamar_id, tanggal_masuk, durasi_bulan, catatan, status) VALUES
